@@ -41,7 +41,7 @@ We said that redux is a state management library. In order to manage a state, we
 
 In our `App.js` let's create our redux state.
 
-```javascript=
+```js
 // App.js
 const reduxState = {
 	name: 'Farah',
@@ -51,7 +51,7 @@ const reduxState = {
 
 In redux, we cannot interact with the state without the store (see the picture above). So let's create our redux store and place the state inside of it.
 
-```javascript=
+```js
 // App.js
 import { createStore } from 'redux';
 
@@ -76,7 +76,7 @@ Reducers are functions. The store runs the `reducer` and returns a `new state` b
 
 Okay so our `store` does not want an object. It wants a function that returns that object. Let's do it!
 
-```javascript=
+```js
 // App.js
 import { createStore } from 'redux';
 
@@ -114,7 +114,7 @@ We can't have our `state management` logic and our main `App` logic in the same 
 - inside of `redux`, create a `store` directory.
 - move the redux code into it and export it.
 
-```javascript=
+```js
 import { createStore } from 'redux';
 
 const reduxState = {
@@ -151,7 +151,7 @@ Now that we have created our state, we need a way for it to change, otherwise we
 
 An action is a signal for a reducer to `act` and tell the store to do something with the state. For example,
 
-```javascript=
+```js
 // store/index.js
 const addHeight = {
 	type: 'ADD_HEIGHT',
@@ -182,7 +182,7 @@ A reducer is responsible for returning the new state. Even if we use `dispatch`,
 
 let us get back to reducers. This is the reducer from our store directory.
 
-```javascript=
+```js
 // store/index.js
 const reduxState = {
 	name: 'Farah',
@@ -197,7 +197,7 @@ const reducer = (state = reduxState) => {
 - Add a new parameter `action` to the reducer.
 - Log it in the console and see the result.
 
-```javascript=
+```js
 const reduxState = {
 	name: 'Farah',
 	age: 300
@@ -227,7 +227,7 @@ So the reason `store.dispatch(addHeight)` didn't work was not because the reduce
 
 Let's `dispatch` another action, for style points!
 
-```javascript=
+```js
 // store/index.js
 const addWeight = {
 	type: 'ADD_WEIGHT',
@@ -247,7 +247,7 @@ this is the action {type: "ADD_WEIGHT", payload: "420 kg"}
 
 Every time we dispatch an action the reducer sees it. It sees all actions at the same time. So to use these actions, we can just tell the reducer how to `change the state` based on the `action type`.
 
-```javascript=
+```js
 // store
 const reducer = (state = reduxState, action) => {
 	// we return the new state based on the action type.
@@ -265,7 +265,7 @@ It should just add `height` to the state. Instead, it removed the old state and 
 
 #### <span style="text-decoration:line-through"> Superman</span> Spread Operator to the Rescue:
 
-```javascript=
+```js
 // store
 const reducer = (state = reduxState, action) => {
 	if (action.type === 'ADD_HEIGHT') {
@@ -301,7 +301,7 @@ This is where **`action creators`** come into play.
 
 Action creators are simple. We take an action (object), and put it inside a function. This allows us to change the value of the `action.payload` as needed!
 
-```javascript=
+```js
 // we refactor the action object to an action creator function
 // this function will return the old action...kind of.
 const addHeight = (payload) => {
@@ -332,7 +332,7 @@ Do the same with `addWeight` and allow us to change the weight attribute in the 
 
 your `store` directory should have an `index.js` and look somewhat like this.
 
-```javascript=
+```js
 import { createStore } from 'redux';
 import { addHeight, addWeight } from '../actions';
 import reducer from '../reducers';
@@ -380,7 +380,7 @@ Now, try to implement the following state in redux -no peeking at the code snipp
 
 - `store.getState()` should return the following object:
 
-```javascript=
+```js
 {
     user: { name, age },
     location: { country, city },
@@ -411,7 +411,7 @@ Before we can connect react to redux, we need some react components. So let's ge
 - create a `components` directory
 - create a Form directory
 
-```javascript=
+```js
 class Form extends Component {
 	render() {
 		return (
@@ -427,7 +427,7 @@ class Form extends Component {
 
 - Let's add an onChange and onSubmit to the form.
 
-```javascript=
+```js
 class Form extends Component {
 	onInputChange = (e) => {
 		console.log(e.target.value);
@@ -499,7 +499,7 @@ Now that we have the provider exposing the store to our App, we can start workin
 
 The `mapStateToProps` function takes the `state` from our store as argument, and then returns an object. In that object, we can extract the values we need.
 
-```javascript=
+```js
 // components/Form/index.js
 const mapStateToProps = (state) => {
 	return {
@@ -514,7 +514,7 @@ So how does redux know to use this function if we just wrote it? This is where t
 
 So how do we `connect` the redux state to our componenet? Simple. We use the connect function as follows:
 
-```javascript=
+```js
 // components/Form/index.js
 import { connect } from 'react-redux';
 
